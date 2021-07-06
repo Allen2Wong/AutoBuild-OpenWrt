@@ -82,7 +82,7 @@ jobs:
     #  run: |
     #    git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-jerrykuku
 
-    - name: 读配置
+    - name: config
       env:
         CONFIG_FILE: 'TimeCloud.config'
       run: |
@@ -90,13 +90,13 @@ jobs:
         chmod +x ./customize.sh && ./customize.sh
         cd openwrt && make defconfig
         
-    - name: 下载
+    - name: dl
       working-directory: ./openwrt
       run: |
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    - name: 编译
+    - name: Build
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
