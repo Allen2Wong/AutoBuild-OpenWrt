@@ -5,5 +5,5 @@
   - Edit the workflow file you desire，uncomment push section 3 lines together and submit the commit.(Other 2 methods wait you to discover)
   - The build starts automatically. Progress can be viewed on the Actions page.
   - When the build is complete, click the `Artifacts` button in the upper right corner of the Actions page to download the binaries.
-  - Default Web Admin IP: `192.168.5.1`, username `root`，password `password`
+  - Default Web Admin IP: `192.168.1.1`, username `root`，password `password`
 
