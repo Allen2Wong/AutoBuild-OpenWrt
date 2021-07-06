@@ -1,11 +1,10 @@
 #=================================================
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: MIT
-# Author: eSirPlayground
-# Youtube Channel: https://goo.gl/fvkdwm 
+# Author: Allen2Wong
 #=================================================
 
-name: Build_NanoPi_R2S
+name: Build_TimeCloud
 
 on: 
   release:
@@ -62,15 +61,15 @@ jobs:
         REPO_BRANCH: master
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
-        echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
+    #   cd openwrt
+    #   echo "src-git ssrp https://github.com/fw876/helloworld.git" >> ./feeds.conf.default
         
     - name: Update & Install feeds
       working-directory: ./openwrt
       run: |
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-        ./scripts/feeds install -a
+    #       ./scripts/feeds install -a
         
     #- name: Import external feeds - passwall
     #  working-directory: ./openwrt
@@ -83,21 +82,21 @@ jobs:
     #  run: |
     #    git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-jerrykuku
 
-    - name: Configuration Customization - Build_NanoPi_R2S
+    - name: 读配置
       env:
-        CONFIG_FILE: 'NanoPi_R2S.config'
+        CONFIG_FILE: 'TimeCloud.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x ./customize.sh && ./customize.sh
         cd openwrt && make defconfig
         
-    - name: Download package
+    - name: 下载
       working-directory: ./openwrt
       run: |
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    - name: Build firmware
+    - name: 编译
       working-directory: ./openwrt
       run: |
         echo -e "$(nproc) thread build."
